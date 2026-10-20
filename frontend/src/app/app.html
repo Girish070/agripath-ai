@@ -1,0 +1,53 @@
+<a class="skip-link" href="#main">{{ i18n.t('a11y.skip') }}</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" routerLink="/" [attr.aria-label]="'AGRIPATH AI - ' + i18n.t('nav.home')">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="23" r="13" fill="#E8710A" />
+        <circle cx="16" cy="19" r="4" fill="#F7A652" opacity=".7" />
+        <path d="M20 10c0-4 3-7 8-7-1 4-3 7-8 7Z" fill="#2F6B3F" />
+        <path d="M20 10c-1-2-3-3-5-3" stroke="#1F4A2C" stroke-width="1.6" fill="none" stroke-linecap="round" />
+      </svg>
+      <span class="brand-text">
+        <strong>AGRIPATH AI</strong>
+        <small>{{ i18n.t('brand.region') }}</small>
+      </span>
+    </a>
+
+    <nav class="nav-desktop" [attr.aria-label]="i18n.t('a11y.nav')">
+      @for (n of nav; track n.path) {
+        <a [routerLink]="n.path" routerLinkActive="active">{{ i18n.t(n.key) }}</a>
+      }
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-toggle" role="group" [attr.aria-label]="i18n.t('a11y.language')">
+        <button type="button" [class.on]="i18n.lang() === 'en'" [attr.aria-pressed]="i18n.lang() === 'en'" (click)="i18n.set('en')" lang="en">English</button>
+        <button type="button" [class.on]="i18n.lang() === 'mr'" [attr.aria-pressed]="i18n.lang() === 'mr'" (click)="i18n.set('mr')" lang="mr">मराठी</button>
+      </div>
+      <button type="button" class="menu-btn" [attr.aria-expanded]="menuOpen()" aria-controls="mobile-nav" [attr.aria-label]="i18n.t('a11y.menu')" (click)="menuOpen.set(!menuOpen())">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  @if (menuOpen()) {
+    <nav id="mobile-nav" class="nav-mobile" [attr.aria-label]="i18n.t('a11y.nav')">
+      @for (n of nav; track n.path) {
+        <a [routerLink]="n.path" routerLinkActive="active">{{ i18n.t(n.key) }}</a>
+      }
+    </nav>
+  }
+</header>
+
+<main id="main" tabindex="-1">
+  <router-outlet />
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="footer-warn">{{ i18n.t('footer.disclaimer') }}</p>
+    <p class="footer-small">AGRIPATH AI · {{ i18n.t('footer.project') }} · {{ i18n.t('footer.mr_review') }}</p>
+  </div>
+</footer>
